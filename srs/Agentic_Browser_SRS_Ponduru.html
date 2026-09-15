@@ -1,0 +1,929 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Browser SRS — v2.0</title>
+<style>
+    @page {
+        size: A4;
+        margin: 20mm 15mm;
+        background-color: #f8f9fa;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #202124;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px 40px;
+        font-size: 11pt;
+    }
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+    h1 {
+        color: #1a73e8;
+        font-size: 24pt;
+        border-bottom: 2px solid #1a73e8;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+    }
+    h2 {
+        color: #202124;
+        font-size: 16pt;
+        margin-top: 30px;
+        border-left: 4px solid #1a73e8;
+        padding-left: 10px;
+        page-break-after: avoid;
+    }
+    h3 {
+        color: #5f6368;
+        font-size: 13pt;
+        margin-top: 20px;
+        page-break-after: avoid;
+    }
+    h4 {
+        color: #3c4043;
+        font-size: 11pt;
+        margin-top: 15px;
+        page-break-after: avoid;
+    }
+    p, ul {
+        margin-bottom: 15px;
+    }
+    li {
+        margin-bottom: 8px;
+    }
+    .header {
+        text-align: right;
+        font-size: 9pt;
+        color: #5f6368;
+        margin-bottom: 40px;
+    }
+    .doc-meta {
+        background-color: #ffffff;
+        padding: 15px;
+        border: 1px solid #dadce0;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        page-break-inside: avoid;
+    }
+    .doc-meta strong {
+        display: inline-block;
+        width: 140px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 10pt;
+    }
+    th, td {
+        border: 1px solid #dadce0;
+        padding: 8px 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+        font-weight: 600;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    .priority-must {
+        color: #d93025;
+        font-weight: bold;
+        font-size: 9pt;
+    }
+    .priority-should {
+        color: #e37400;
+        font-weight: bold;
+        font-size: 9pt;
+    }
+    .priority-could {
+        color: #1e8e3e;
+        font-weight: bold;
+        font-size: 9pt;
+    }
+    .note-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 10px 15px;
+        margin: 15px 0;
+        border-radius: 0 4px 4px 0;
+        font-size: 10pt;
+    }
+    .warning-box {
+        background-color: #fce8e6;
+        border-left: 4px solid #d93025;
+        padding: 10px 15px;
+        margin: 15px 0;
+        border-radius: 0 4px 4px 0;
+        font-size: 10pt;
+    }
+    code {
+        background-color: #f1f3f4;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "Roboto Mono", "Consolas", monospace;
+        font-size: 10pt;
+    }
+    .toc {
+        background-color: #ffffff;
+        border: 1px solid #dadce0;
+        border-radius: 5px;
+        padding: 15px 20px;
+        margin-bottom: 30px;
+    }
+    .toc a {
+        color: #1a73e8;
+        text-decoration: none;
+    }
+    .toc a:hover {
+        text-decoration: underline;
+    }
+    .toc ul {
+        list-style-type: none;
+        padding-left: 20px;
+    }
+    .toc > ul {
+        padding-left: 0;
+    }
+    .toc li {
+        margin-bottom: 4px;
+    }
+</style>
+</head>
+<body>
+    <div class="header">Software Requirements Specification — Agentic AI & Privacy Browser</div>
+
+    <h1>Software Requirements Specification</h1>
+
+    <div class="doc-meta">
+        <div><strong>Project:</strong> Agentic AI & Privacy Browser</div>
+        <div><strong>Author:</strong> Ponduru Sampath Kumar</div>
+        <div><strong>Version:</strong> 2.0</div>
+        <div><strong>Date:</strong> September 15, 2026</div>
+        <div><strong>Status:</strong> Under Review</div>
+    </div>
+
+    <!-- Revision History -->
+    <h2>Revision History</h2>
+    <table>
+        <tr>
+            <th>Version</th>
+            <th>Date</th>
+            <th>Author</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>1.0</td>
+            <td>2026-09-01</td>
+            <td>Ponduru Sampath Kumar</td>
+            <td>Initial draft of the SRS document.</td>
+        </tr>
+        <tr>
+            <td>2.0</td>
+            <td>2026-09-15</td>
+            <td>Ponduru Sampath Kumar</td>
+            <td>Added glossary, assumptions, use cases, external interfaces, data requirements, error handling, deployment sections. Enhanced all functional and non-functional requirements with measurable criteria and MoSCoW priority labels.</td>
+        </tr>
+    </table>
+
+    <!-- Table of Contents -->
+    <h2>Table of Contents</h2>
+    <div class="toc">
+        <ul>
+            <li><a href="#sec1">1. Introduction</a>
+                <ul>
+                    <li><a href="#sec1-1">1.1 Purpose</a></li>
+                    <li><a href="#sec1-2">1.2 Scope</a></li>
+                    <li><a href="#sec1-3">1.3 Glossary & Definitions</a></li>
+                    <li><a href="#sec1-4">1.4 References</a></li>
+                    <li><a href="#sec1-5">1.5 Priority Scheme</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec2">2. Overall Description</a>
+                <ul>
+                    <li><a href="#sec2-1">2.1 Product Perspective</a></li>
+                    <li><a href="#sec2-2">2.2 User Classes & Characteristics</a></li>
+                    <li><a href="#sec2-3">2.3 Assumptions & Dependencies</a></li>
+                    <li><a href="#sec2-4">2.4 Constraints</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec3">3. Use Cases</a></li>
+            <li><a href="#sec4">4. Functional Requirements (FR)</a>
+                <ul>
+                    <li><a href="#sec4-1">4.1 Core Browsing Functionality</a></li>
+                    <li><a href="#sec4-2">4.2 Privacy & Ad-Blocking Engine</a></li>
+                    <li><a href="#sec4-3">4.3 Agentic AI Assistant (Groq Powered)</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec5">5. Non-Functional Requirements (NFR)</a>
+                <ul>
+                    <li><a href="#sec5-1">5.1 Performance & Resource Efficiency</a></li>
+                    <li><a href="#sec5-2">5.2 Security & Safety</a></li>
+                    <li><a href="#sec5-3">5.3 Reliability & Availability</a></li>
+                    <li><a href="#sec5-4">5.4 Maintainability</a></li>
+                    <li><a href="#sec5-5">5.5 Accessibility</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec6">6. External Interface Requirements</a></li>
+            <li><a href="#sec7">7. Data Requirements</a></li>
+            <li><a href="#sec8">8. Error Handling & Fallback Behavior</a></li>
+            <li><a href="#sec9">9. Deployment & Installation</a></li>
+            <li><a href="#sec10">10. Appendices</a></li>
+        </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 1: INTRODUCTION -->
+    <!-- ============================================================ -->
+    <h2 id="sec1">1. Introduction</h2>
+
+    <h3 id="sec1-1">1.1 Purpose</h3>
+    <p>This document specifies the software requirements for a new desktop web browser. The application combines aggressive privacy protections (similar to Brave) with an autonomous, agentic AI layer, capable of executing multi-step workflows on behalf of the user. This SRS serves as the authoritative agreement between stakeholders and the development team for all features and constraints in version 1.0.</p>
+
+    <h3 id="sec1-2">1.2 Scope</h3>
+    <p>The browser is designed as a lightweight desktop application to accommodate development on mid-range hardware. It will utilize a lightweight framework (e.g., Tauri with Rust) to hook into native system webviews, relying on <code>adblock-rs</code> for network filtering and the Groq API for Large Language Models (LLMs) to power the agentic reasoning layer.</p>
+    <p>The following items are <strong>explicitly out of scope</strong> for version 1.0:</p>
+    <ul>
+        <li>Mobile platforms (Android, iOS).</li>
+        <li>Browser extension / add-on ecosystem.</li>
+        <li>Cross-device bookmark and history synchronization.</li>
+        <li>Built-in VPN or Tor integration.</li>
+        <li>PDF viewer and media player.</li>
+    </ul>
+
+    <h3 id="sec1-3">1.3 Glossary & Definitions</h3>
+    <table>
+        <tr>
+            <th>Term</th>
+            <th>Definition</th>
+        </tr>
+        <tr>
+            <td>Accessibility Tree</td>
+            <td>A simplified, structured representation of a web page's interactive elements (buttons, links, inputs, headings) derived from the DOM, used to provide context to the AI agent.</td>
+        </tr>
+        <tr>
+            <td><code>adblock-rs</code></td>
+            <td>An open-source Rust library that parses and evaluates ad-blocking filter lists (EasyList, uBlock Origin syntax) to determine whether a network request should be blocked.</td>
+        </tr>
+        <tr>
+            <td>Agentic Reasoning Loop</td>
+            <td>The cyclic process of: (1) extracting page state, (2) sending it to an LLM, (3) receiving a structured action, (4) executing the action in the browser, and (5) observing the result.</td>
+        </tr>
+        <tr>
+            <td>Cosmetic Filtering</td>
+            <td>The practice of injecting CSS rules into a web page to hide DOM elements (e.g., ad containers) that passed network-level filtering.</td>
+        </tr>
+        <tr>
+            <td>DOM (Document Object Model)</td>
+            <td>The tree-structured representation of an HTML document that the browser uses for rendering and scripting.</td>
+        </tr>
+        <tr>
+            <td>Groq API</td>
+            <td>A cloud-hosted inference API powered by Groq's Language Processing Unit (LPU) hardware, providing ultra-low-latency LLM inference.</td>
+        </tr>
+        <tr>
+            <td>IPC (Inter-Process Communication)</td>
+            <td>The mechanism by which the Tauri frontend (JavaScript) communicates with the Rust backend through command invocations and event listeners.</td>
+        </tr>
+        <tr>
+            <td>LPU (Language Processing Unit)</td>
+            <td>Groq's custom silicon chip architecture optimized for sequential token generation in large language models, offering significantly lower latency than GPU-based inference.</td>
+        </tr>
+        <tr>
+            <td>MoSCoW</td>
+            <td>A prioritization scheme: <strong>Must</strong> (non-negotiable), <strong>Should</strong> (important but not critical), <strong>Could</strong> (desirable if time permits).</td>
+        </tr>
+        <tr>
+            <td>Shadow DOM</td>
+            <td>An encapsulated DOM subtree attached to a host element, commonly used by Web Components, which is isolated from the main document's styles and scripts.</td>
+        </tr>
+        <tr>
+            <td>Tauri</td>
+            <td>An open-source framework for building lightweight desktop applications using web technologies for the frontend and Rust for the backend, leveraging the OS-native webview instead of bundling Chromium.</td>
+        </tr>
+        <tr>
+            <td>WebView</td>
+            <td>The OS-native web rendering component used by Tauri: WebView2 (Chromium-based) on Windows, WebKit on macOS/Linux.</td>
+        </tr>
+    </table>
+
+    <h3 id="sec1-4">1.4 References</h3>
+    <table>
+        <tr>
+            <th>Reference</th>
+            <th>URL / Identifier</th>
+        </tr>
+        <tr>
+            <td>Tauri v2 Documentation</td>
+            <td>https://v2.tauri.app/</td>
+        </tr>
+        <tr>
+            <td><code>adblock-rs</code> Repository</td>
+            <td>https://github.com/nickturbine/nickturbine-nickturbine-nickturbine-nickturbine-nickturbine-nickturbine-nickturbine/nickturbine-nickturbine-nickturbine-nickturbine-nickturbine-nickturbine</td>
+        </tr>
+        <tr>
+            <td>Groq API Documentation</td>
+            <td>https://console.groq.com/docs/</td>
+        </tr>
+        <tr>
+            <td>EasyList Filter Specification</td>
+            <td>https://easylist.to/</td>
+        </tr>
+        <tr>
+            <td>uBlock Origin Syntax</td>
+            <td>https://github.com/gorhill/uBlock/wiki/Static-filter-syntax</td>
+        </tr>
+        <tr>
+            <td>IEEE 830-1998</td>
+            <td>IEEE Recommended Practice for Software Requirements Specifications</td>
+        </tr>
+        <tr>
+            <td>WCAG 2.1 Guidelines</td>
+            <td>https://www.w3.org/TR/WCAG21/</td>
+        </tr>
+    </table>
+
+    <h3 id="sec1-5">1.5 Priority Scheme</h3>
+    <p>All requirements use the MoSCoW prioritization scheme:</p>
+    <ul>
+        <li><span class="priority-must">[MUST]</span> — Non-negotiable for v1.0 launch. The product cannot ship without this.</li>
+        <li><span class="priority-should">[SHOULD]</span> — Important and expected, but the product can launch with a workaround if necessary.</li>
+        <li><span class="priority-could">[COULD]</span> — Desirable enhancement. Implement if time and resources permit.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 2: OVERALL DESCRIPTION -->
+    <!-- ============================================================ -->
+    <h2 id="sec2">2. Overall Description</h2>
+
+    <h3 id="sec2-1">2.1 Product Perspective</h3>
+    <p>The browser consists of three primary subsystems:</p>
+    <ul>
+        <li><strong>UI & Rendering Shell:</strong> A lightweight web-tech frontend running inside a Tauri window, using the OS-native webview (WebView2 on Windows, WebKit on macOS/Linux) for page rendering.</li>
+        <li><strong>Privacy Engine:</strong> A Rust-based backend utilizing <code>adblock-rs</code> to intercept web requests and block trackers before they load. It operates as a local filter between the webview and the network layer.</li>
+        <li><strong>Agentic Pipeline:</strong> A background service that extracts the web page's Document Object Model (DOM), simplifies it into an accessibility tree, and passes it to an LLM via the Groq API to generate actionable browser commands.</li>
+    </ul>
+
+    <h3 id="sec2-2">2.2 User Classes & Characteristics</h3>
+    <table>
+        <tr>
+            <th>User Class</th>
+            <th>Description</th>
+            <th>Technical Proficiency</th>
+        </tr>
+        <tr>
+            <td>Privacy-Conscious General User</td>
+            <td>Users who want built-in ad-blocking and tracker protection without needing to install extensions. They expect a familiar browsing experience with enhanced privacy out-of-the-box.</td>
+            <td>Low to Medium</td>
+        </tr>
+        <tr>
+            <td>Power User / Developer</td>
+            <td>Users who will leverage the agentic AI assistant for complex, multi-step web automation tasks (e.g., data extraction, form filling workflows, research tasks). They are comfortable providing natural language instructions and reviewing agent actions.</td>
+            <td>Medium to High</td>
+        </tr>
+        <tr>
+            <td>Accessibility User</td>
+            <td>Users who rely on keyboard navigation, screen readers, or other assistive technologies. The agentic AI layer may serve as an additional accessibility aid for web interaction.</td>
+            <td>Variable</td>
+        </tr>
+    </table>
+
+    <h3 id="sec2-3">2.3 Assumptions & Dependencies</h3>
+    <ul>
+        <li><strong>A-1:</strong> The target operating system has a compatible native webview installed (WebView2 on Windows 10+, WebKit on macOS 11+ / Linux with WebKitGTK).</li>
+        <li><strong>A-2:</strong> The user has a stable internet connection for AI-powered features. AI features degrade gracefully when offline (see Section 8).</li>
+        <li><strong>A-3:</strong> The Groq API remains commercially available with a free or affordable tier that supports the required models. A vendor change would require re-integration effort.</li>
+        <li><strong>A-4:</strong> The <code>adblock-rs</code> library continues to be maintained and compatible with current EasyList and uBlock Origin filter syntax updates.</li>
+        <li><strong>A-5:</strong> Community-maintained filter lists (EasyList, EasyPrivacy, Disconnect.me) continue to be updated by their respective maintainers.</li>
+        <li><strong>A-6:</strong> The Tauri framework maintains backward compatibility within its v2.x release line.</li>
+    </ul>
+
+    <h3 id="sec2-4">2.4 Constraints</h3>
+    <ul>
+        <li><strong>C-1 Hardware:</strong> The codebase must compile cleanly on a system with 8–16 GB of RAM. Forking and compiling the core Chromium source repository is strictly prohibited.</li>
+        <li><strong>C-2 AI Compute:</strong> Heavy reasoning tasks must be offloaded to cloud APIs (Groq) to prevent system freezing. No local LLM inference is permitted in v1.0.</li>
+        <li><strong>C-3 Webview Limitations:</strong> The application is constrained by the capabilities of the OS-native webview. Features requiring direct Chromium DevTools Protocol access may not be available on all platforms.</li>
+        <li><strong>C-4 Single Developer:</strong> The initial development is undertaken by a single developer; scope must remain feasible for individual execution.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 3: USE CASES -->
+    <!-- ============================================================ -->
+    <h2 id="sec3">3. Use Cases</h2>
+
+    <h3>UC-1: Private Web Browsing</h3>
+    <p><strong>Actor:</strong> Privacy-Conscious General User</p>
+    <p><strong>Precondition:</strong> Browser is installed and launched.</p>
+    <p><strong>Flow:</strong></p>
+    <ol>
+        <li>User types a URL or search query into the address bar.</li>
+        <li>The Privacy Engine intercepts all outbound requests and evaluates them against filter lists.</li>
+        <li>Blocked trackers and ads are silently dropped; cosmetic filters hide residual ad containers.</li>
+        <li>The page loads with a visible shield icon showing the count of blocked items.</li>
+        <li>User can click the shield icon to see a breakdown of blocked trackers, ads, and fingerprinting scripts.</li>
+    </ol>
+    <p><strong>Postcondition:</strong> The page renders without ads or trackers. No tracking cookies are stored.</p>
+
+    <h3>UC-2: AI-Assisted Form Filling</h3>
+    <p><strong>Actor:</strong> Power User</p>
+    <p><strong>Precondition:</strong> User is on a web page with a multi-field form. Groq API is reachable.</p>
+    <p><strong>Flow:</strong></p>
+    <ol>
+        <li>User opens the AI assistant panel and types: <em>"Fill out this job application with my resume data."</em></li>
+        <li>The system extracts the accessibility tree of the current page.</li>
+        <li>The accessibility tree and user instruction are sent to the Groq API (Llama 3.3 70B).</li>
+        <li>The LLM returns a sequence of structured actions (type into field X, select option Y).</li>
+        <li>Each action is displayed in the action log panel before execution.</li>
+        <li>The agent executes each action sequentially, pausing for user confirmation on sensitive fields (e.g., SSN, salary).</li>
+    </ol>
+    <p><strong>Postcondition:</strong> The form is filled. The user reviews and submits manually.</p>
+
+    <h3>UC-3: Multi-Step Web Research</h3>
+    <p><strong>Actor:</strong> Power User</p>
+    <p><strong>Precondition:</strong> User is on a search engine. Groq API is reachable.</p>
+    <p><strong>Flow:</strong></p>
+    <ol>
+        <li>User types: <em>"Find the top 5 open-source Rust web frameworks, compare their GitHub stars and last commit date, and summarize the results."</em></li>
+        <li>The agent navigates to search results, opens each framework's GitHub page in sequence.</li>
+        <li>For each page, the agent extracts the relevant data (stars, last commit) from the accessibility tree.</li>
+        <li>After collecting all data, the agent compiles a summary and presents it in the assistant panel.</li>
+        <li>Each navigation step is logged in the action panel with status indicators.</li>
+    </ol>
+    <p><strong>Postcondition:</strong> A structured comparison is displayed in the assistant panel.</p>
+
+    <h3>UC-4: Offline / Degraded Mode Browsing</h3>
+    <p><strong>Actor:</strong> Any User</p>
+    <p><strong>Precondition:</strong> Groq API is unreachable (network issue, rate limit, API outage).</p>
+    <p><strong>Flow:</strong></p>
+    <ol>
+        <li>User launches the browser or the API connection drops mid-session.</li>
+        <li>The browser detects the API is unreachable and displays a non-intrusive notification: <em>"AI assistant is temporarily unavailable."</em></li>
+        <li>All core browsing and privacy features continue to function normally.</li>
+        <li>The AI assistant panel shows a disabled state with a retry button.</li>
+        <li>When connectivity is restored, the assistant automatically re-enables.</li>
+    </ol>
+    <p><strong>Postcondition:</strong> The user can continue browsing without disruption. AI features resume when connectivity is restored.</p>
+
+    <h3>UC-5: Page Summarization</h3>
+    <p><strong>Actor:</strong> Privacy-Conscious General User</p>
+    <p><strong>Precondition:</strong> User is reading a long article. Groq API is reachable.</p>
+    <p><strong>Flow:</strong></p>
+    <ol>
+        <li>User clicks the "Summarize" button or types: <em>"Summarize this page."</em></li>
+        <li>The system extracts the page's text content (excluding navigation, ads, footers).</li>
+        <li>The content is sent to the lightweight model (Llama 3.1 8B Instant) for summarization.</li>
+        <li>A concise summary is displayed in the assistant panel within 2 seconds.</li>
+    </ol>
+    <p><strong>Postcondition:</strong> The user receives a readable summary without leaving the page.</p>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 4: FUNCTIONAL REQUIREMENTS -->
+    <!-- ============================================================ -->
+    <h2 id="sec4">4. Functional Requirements (FR)</h2>
+
+    <h3 id="sec4-1">4.1 Core Browsing Functionality</h3>
+    <ul>
+        <li><strong>FR-1.1:</strong> <span class="priority-must">[MUST]</span> The system shall provide standard web navigation, including address bar URL entry with autocomplete suggestions, forward/backward history traversal, and page reloading (including hard reload bypassing cache).</li>
+        <li><strong>FR-1.2:</strong> <span class="priority-must">[MUST]</span> The system shall support a multi-tab interface with the ability to create, close, reorder, duplicate, and pin tabs. Inactive tabs shall be suspended after a configurable idle period (default: 5 minutes) to reclaim memory.</li>
+        <li><strong>FR-1.3:</strong> <span class="priority-must">[MUST]</span> The system shall manage user data locally, including bookmarks (with folder organization), browsing history (with search), and secure password autofill. Passwords shall be encrypted at rest using the OS-native credential manager (Windows Credential Manager / macOS Keychain / Linux Secret Service) via Tauri's keyring plugin. A master password option shall be available for additional protection.</li>
+        <li><strong>FR-1.4:</strong> <span class="priority-should">[SHOULD]</span> The system shall support file downloads with a download manager that displays progress, allows pausing/resuming, and provides a download history.</li>
+        <li><strong>FR-1.5:</strong> <span class="priority-should">[SHOULD]</span> The system shall provide a find-in-page feature (Ctrl+F / Cmd+F) with match highlighting and navigation between results.</li>
+        <li><strong>FR-1.6:</strong> <span class="priority-should">[SHOULD]</span> The system shall support standard keyboard shortcuts for all core navigation actions (new tab, close tab, reload, back, forward, address bar focus, find-in-page).</li>
+        <li><strong>FR-1.7:</strong> <span class="priority-could">[COULD]</span> The system shall provide a reading mode that strips non-essential page elements to present article content in a clean, readable format.</li>
+    </ul>
+
+    <h3 id="sec4-2">4.2 Privacy & Ad-Blocking Engine</h3>
+    <ul>
+        <li><strong>FR-2.1 Network Interception:</strong> <span class="priority-must">[MUST]</span> The browser shall intercept all outbound requests and evaluate them against local blocklists before transmission. Interception shall be implemented via Tauri's <code>on_navigation</code> event and, where supported, via platform-specific webview delegate methods. Known limitations of the native webview interception API shall be documented per platform.</li>
+        <li><strong>FR-2.2 Rule Parsing:</strong> <span class="priority-must">[MUST]</span> The system shall support EasyList and uBlock Origin rule syntaxes using the <code>adblock-rs</code> library. Filter lists shall be auto-updated every 24 hours on application startup, with the option for manual refresh from the settings panel.</li>
+        <li><strong>FR-2.3 Cosmetic Filtering:</strong> <span class="priority-must">[MUST]</span> The browser shall inject CSS into loaded pages to collapse and hide empty DOM elements left behind by blocked network requests. The user shall be able to toggle cosmetic filtering on a per-site basis via the shield icon.</li>
+        <li><strong>FR-2.4 Tracker Protection:</strong> <span class="priority-must">[MUST]</span> The system shall block known fingerprinting scripts targeting the following vectors: canvas fingerprinting, WebGL renderer enumeration, AudioContext fingerprinting, and font enumeration. Fingerprinting definitions shall be sourced from the EasyPrivacy and Disconnect.me tracking protection lists.</li>
+        <li><strong>FR-2.5 HTTPS Upgrade:</strong> <span class="priority-should">[SHOULD]</span> The browser shall automatically upgrade all HTTP requests to HTTPS where a secure connection is available. The user shall be warned with a prominent indicator when visiting a site over plain HTTP.</li>
+        <li><strong>FR-2.6 Cookie Management:</strong> <span class="priority-should">[SHOULD]</span> The system shall provide configurable cookie policies including: block all third-party cookies (default), clear all cookies on session exit, per-site cookie whitelisting, and automatic cookie consent banner dismissal.</li>
+        <li><strong>FR-2.7 Privacy Dashboard:</strong> <span class="priority-could">[COULD]</span> The browser shall display a per-page privacy dashboard (accessible via the shield icon) showing: count of blocked ads, blocked trackers, blocked fingerprinting attempts, and HTTPS upgrade status.</li>
+    </ul>
+
+    <h3 id="sec4-3">4.3 Agentic AI Assistant (Groq Powered)</h3>
+    <ul>
+        <li><strong>FR-3.1 DOM Extraction:</strong> <span class="priority-must">[MUST]</span> The system shall extract a condensed version of the current tab's interactive elements (Accessibility Tree) to pass context to the AI. The extraction shall handle iframes, shadow DOM trees, and dynamically loaded content. For pages requiring scrolling, the agent shall trigger scroll events to load lazy content before extraction.</li>
+        <li><strong>FR-3.2 Cloud-Based Inference Engine:</strong> <span class="priority-must">[MUST]</span> The system shall route all heavy reasoning, DOM evaluation, and NLP tasks to the Groq API. No LLM inference shall run locally on the user's machine.</li>
+        <li><strong>FR-3.3 Primary Reasoning Model:</strong> <span class="priority-must">[MUST]</span> The agentic backend shall utilize the most capable available model on the Groq platform (currently <strong>Llama 3.3 70B Versatile</strong>) for complex decision-making, DOM mapping, and multi-step action planning. The model identifier shall be configurable via a settings file to accommodate model deprecations and upgrades without code changes.</li>
+        <li><strong>FR-3.4 Dual-Model Routing:</strong> <span class="priority-should">[SHOULD]</span> The system shall route lightweight tasks (search autocomplete, page summarization, simple Q&A) to a smaller, faster model (currently <strong>Llama 3.1 8B Instant</strong>) on Groq. The model identifier shall be configurable. Routing logic shall be determined by task classification heuristics in the local client.</li>
+        <li><strong>FR-3.5 Tool Calling & Structured Output:</strong> <span class="priority-must">[MUST]</span> The browser agent shall enforce strict JSON mode in Groq API requests for browser automation commands. The system shall validate the LLM's JSON output against a predefined action schema before execution. Malformed or schema-violating responses shall be retried up to 2 times before reporting an error to the user.</li>
+        <li><strong>FR-3.6 Action Execution:</strong> <span class="priority-must">[MUST]</span> The agent shall execute state-changing actions on the web based on natural language prompts. The supported action types are:
+            <ul>
+                <li><code>click(selector)</code> — Click an element identified by CSS selector or accessibility tree index.</li>
+                <li><code>type(selector, text)</code> — Type text into an input field.</li>
+                <li><code>scroll(direction, amount)</code> — Scroll the page or a specific container.</li>
+                <li><code>navigate(url)</code> — Navigate the current tab to a URL.</li>
+                <li><code>select(selector, value)</code> — Select an option from a dropdown.</li>
+                <li><code>wait(ms)</code> — Pause execution for a specified duration.</li>
+                <li><code>extract(selector)</code> — Extract text content from an element.</li>
+            </ul>
+            The following actions are <strong>not supported</strong> in v1.0: drag-and-drop, file upload, browser alert/dialog interaction.
+        </li>
+        <li><strong>FR-3.7 Conversation Memory:</strong> <span class="priority-should">[SHOULD]</span> The agent shall maintain a session-scoped conversation history to support multi-turn task execution. The history shall include user instructions, agent actions taken, and observed page state changes. The conversation context shall be cleared when the user starts a new task or closes the assistant panel.</li>
+        <li><strong>FR-3.8 Action Transparency & Control:</strong> <span class="priority-must">[MUST]</span> The browser shall display a real-time action log panel showing each step the agent takes, including: the action type, target element description, execution status (pending/running/success/failed), and timestamp. The user shall have the ability to pause, resume, or cancel agent execution at any point.</li>
+        <li><strong>FR-3.9 Offline / Degraded Mode:</strong> <span class="priority-must">[MUST]</span> When the Groq API is unavailable (network failure, rate limiting, API outage), the browser shall: (a) continue functioning as a standard browser with all privacy features operational, (b) display a non-intrusive notification informing the user that AI features are temporarily unavailable, (c) disable the AI assistant panel with a visible retry mechanism, and (d) automatically re-enable AI features when connectivity is restored.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 5: NON-FUNCTIONAL REQUIREMENTS -->
+    <!-- ============================================================ -->
+    <h2 id="sec5">5. Non-Functional Requirements (NFR)</h2>
+
+    <h3 id="sec5-1">5.1 Performance & Resource Efficiency</h3>
+    <ul>
+        <li><strong>NFR-1.1 Memory Footprint:</strong> <span class="priority-must">[MUST]</span> The core browser shell shall consume no more than 150 MB of RAM while idle (zero tabs open). Each additional open tab shall add no more than 30 MB to the base memory footprint (excluding page-specific content).</li>
+        <li><strong>NFR-1.2 Ad-Block Latency:</strong> <span class="priority-must">[MUST]</span> The network filter must evaluate incoming requests against the full filter list in under 2 milliseconds per request.</li>
+        <li><strong>NFR-1.3 Agent Latency Constraint:</strong> <span class="priority-should">[SHOULD]</span> The local processing portion of the agentic loop (DOM extraction, serialization, response parsing, action execution) shall complete in under 200 milliseconds. The total end-to-end latency target, including Groq API round-trip, is 800 milliseconds under normal network conditions (&lt;100ms ping to Groq servers).</li>
+        <li><strong>NFR-1.4 Build Time:</strong> <span class="priority-should">[SHOULD]</span> A clean build of the browser shell from source must take less than 5 minutes on a reference system (4-core, 3 GHz CPU, 16 GB RAM, SSD storage).</li>
+        <li><strong>NFR-1.5 Startup Time:</strong> <span class="priority-should">[SHOULD]</span> The browser shall launch and display a usable window within 3 seconds on the reference hardware. Filter list loading may continue in the background.</li>
+    </ul>
+
+    <h3 id="sec5-2">5.2 Security & Safety</h3>
+    <ul>
+        <li><strong>NFR-2.1 Agent Sandboxing:</strong> <span class="priority-must">[MUST]</span> The AI agent must operate with strictly scoped privileges, without access to the local file system. File system access, if ever required, shall demand explicit per-session user approval via a system dialog. Access shall be revoked when the session or tab is closed.</li>
+        <li><strong>NFR-2.2 DOM Minimization:</strong> <span class="priority-must">[MUST]</span> Before transmitting page context to the Groq API, the local shell must strip all local network details, hidden form tokens (e.g., CSRF tokens), and sensitive input values (passwords, credit card numbers). The system shall maintain a local, append-only audit log of the data payloads sent to the API for user review.</li>
+        <li><strong>NFR-2.3 Explicit Consent:</strong> <span class="priority-must">[MUST]</span> The AI agent must require explicit human confirmation before submitting any payment details, passwords, or destructive/irreversible actions (e.g., account deletion, purchase confirmation). The confirmation dialog shall display a human-readable summary of the action the agent intends to perform, including the target URL and affected data.</li>
+        <li><strong>NFR-2.4 API Key Management:</strong> <span class="priority-must">[MUST]</span> The Groq API key shall be stored using the OS-native credential manager (Windows Credential Manager, macOS Keychain, Linux Secret Service) and shall never be written to disk in plaintext, logged, or included in crash reports.</li>
+        <li><strong>NFR-2.5 Content Security Policy:</strong> <span class="priority-must">[MUST]</span> The browser shell's own UI (chrome) shall enforce a strict Content Security Policy to prevent XSS attacks on the browser interface itself. Inline scripts and <code>eval()</code> shall be prohibited in the browser chrome.</li>
+        <li><strong>NFR-2.6 Transport Security:</strong> <span class="priority-must">[MUST]</span> All communication between the browser and the Groq API shall use TLS 1.2 or higher. Certificate pinning shall be considered for the Groq API endpoint.</li>
+    </ul>
+
+    <h3 id="sec5-3">5.3 Reliability & Availability</h3>
+    <ul>
+        <li><strong>NFR-3.1 Crash Recovery:</strong> <span class="priority-must">[MUST]</span> The browser shall implement session state persistence so that open tabs can be restored after an unexpected crash or forced restart.</li>
+        <li><strong>NFR-3.2 Crash Rate:</strong> <span class="priority-should">[SHOULD]</span> The browser shall have a crash-free session rate of 99.5% or higher under normal usage conditions.</li>
+        <li><strong>NFR-3.3 API Resilience:</strong> <span class="priority-must">[MUST]</span> The system shall implement exponential backoff retry logic for transient Groq API failures (HTTP 429, 500, 502, 503). After 3 consecutive failures, the system shall enter degraded mode (see FR-3.9).</li>
+    </ul>
+
+    <h3 id="sec5-4">5.4 Maintainability</h3>
+    <ul>
+        <li><strong>NFR-4.1 Modular Architecture:</strong> <span class="priority-should">[SHOULD]</span> The codebase shall maintain clear separation between the three subsystems (UI shell, Privacy Engine, Agentic Pipeline) with well-defined IPC interfaces, allowing each subsystem to be modified or replaced independently.</li>
+        <li><strong>NFR-4.2 Configuration-Driven:</strong> <span class="priority-should">[SHOULD]</span> All model identifiers, API endpoints, filter list URLs, and tunable thresholds (tab suspension timeout, retry limits, latency targets) shall be externalized to a configuration file rather than hardcoded.</li>
+        <li><strong>NFR-4.3 Logging:</strong> <span class="priority-should">[SHOULD]</span> The application shall implement structured logging (JSON format) with configurable log levels (error, warn, info, debug) for all subsystems.</li>
+    </ul>
+
+    <h3 id="sec5-5">5.5 Accessibility</h3>
+    <ul>
+        <li><strong>NFR-5.1 Keyboard Navigation:</strong> <span class="priority-should">[SHOULD]</span> All browser chrome controls (address bar, tabs, settings, AI panel) shall be fully operable via keyboard alone.</li>
+        <li><strong>NFR-5.2 Screen Reader Support:</strong> <span class="priority-should">[SHOULD]</span> All browser chrome UI elements shall have appropriate ARIA labels and roles to support screen reader navigation.</li>
+        <li><strong>NFR-5.3 Color Contrast:</strong> <span class="priority-should">[SHOULD]</span> The browser chrome UI shall meet WCAG 2.1 Level AA minimum contrast ratios (4.5:1 for normal text, 3:1 for large text).</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 6: EXTERNAL INTERFACE REQUIREMENTS -->
+    <!-- ============================================================ -->
+    <h2 id="sec6">6. External Interface Requirements</h2>
+
+    <h3>6.1 Groq API Interface</h3>
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td>Protocol</td>
+            <td>HTTPS REST API (OpenAI-compatible chat completions format)</td>
+        </tr>
+        <tr>
+            <td>Base URL</td>
+            <td><code>https://api.groq.com/openai/v1/chat/completions</code></td>
+        </tr>
+        <tr>
+            <td>Authentication</td>
+            <td>Bearer token via <code>Authorization</code> header</td>
+        </tr>
+        <tr>
+            <td>Request Format</td>
+            <td>JSON with <code>response_format: {"type": "json_object"}</code> for tool calls</td>
+        </tr>
+        <tr>
+            <td>Rate Limits</td>
+            <td>Subject to Groq API tier limits (currently 30 RPM on free tier). The client shall respect <code>Retry-After</code> headers.</td>
+        </tr>
+        <tr>
+            <td>Models Used</td>
+            <td>Primary: <code>llama-3.3-70b-versatile</code>, Secondary: <code>llama-3.1-8b-instant</code> (configurable)</td>
+        </tr>
+    </table>
+
+    <h3>6.2 OS Webview Interface</h3>
+    <table>
+        <tr>
+            <th>Platform</th>
+            <th>Webview Engine</th>
+            <th>Minimum Version</th>
+        </tr>
+        <tr>
+            <td>Windows</td>
+            <td>WebView2 (Chromium-based)</td>
+            <td>Windows 10 v1803+</td>
+        </tr>
+        <tr>
+            <td>macOS</td>
+            <td>WebKit (WKWebView)</td>
+            <td>macOS 11 (Big Sur)+</td>
+        </tr>
+        <tr>
+            <td>Linux</td>
+            <td>WebKitGTK</td>
+            <td>WebKitGTK 2.36+</td>
+        </tr>
+    </table>
+
+    <h3>6.3 Tauri IPC Interface</h3>
+    <p>Communication between the JavaScript frontend and the Rust backend occurs via Tauri's IPC mechanism:</p>
+    <ul>
+        <li><strong>Commands:</strong> The frontend invokes Rust functions via <code>invoke('command_name', { payload })</code>. All commands return typed JSON responses.</li>
+        <li><strong>Events:</strong> The Rust backend emits events (e.g., <code>agent-action-update</code>, <code>block-count-update</code>) that the frontend subscribes to via <code>listen('event_name', callback)</code>.</li>
+        <li><strong>Error Handling:</strong> All IPC commands shall return a <code>Result&lt;T, E&gt;</code> type, with errors serialized as JSON containing an error code and human-readable message.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 7: DATA REQUIREMENTS -->
+    <!-- ============================================================ -->
+    <h2 id="sec7">7. Data Requirements</h2>
+
+    <h3>7.1 Local Data Storage</h3>
+    <table>
+        <tr>
+            <th>Data Type</th>
+            <th>Storage Mechanism</th>
+            <th>Encryption</th>
+            <th>Retention</th>
+        </tr>
+        <tr>
+            <td>Bookmarks</td>
+            <td>SQLite database in Tauri app data directory</td>
+            <td>None (non-sensitive)</td>
+            <td>Until user deletes</td>
+        </tr>
+        <tr>
+            <td>Browsing History</td>
+            <td>SQLite database in Tauri app data directory</td>
+            <td>None (non-sensitive)</td>
+            <td>Configurable (default: 90 days)</td>
+        </tr>
+        <tr>
+            <td>Saved Passwords</td>
+            <td>OS-native credential manager</td>
+            <td>OS-managed encryption</td>
+            <td>Until user deletes</td>
+        </tr>
+        <tr>
+            <td>Cookies</td>
+            <td>Webview-managed cookie store</td>
+            <td>Webview-managed</td>
+            <td>Per cookie policy (FR-2.6)</td>
+        </tr>
+        <tr>
+            <td>AI Conversation History</td>
+            <td>In-memory (session-scoped)</td>
+            <td>N/A (not persisted)</td>
+            <td>Until session ends</td>
+        </tr>
+        <tr>
+            <td>API Audit Log</td>
+            <td>Append-only log file in app data directory</td>
+            <td>None (user-controlled)</td>
+            <td>Configurable (default: 30 days)</td>
+        </tr>
+        <tr>
+            <td>Filter Lists Cache</td>
+            <td>Binary cache file in app data directory</td>
+            <td>None</td>
+            <td>Refreshed every 24 hours</td>
+        </tr>
+        <tr>
+            <td>Groq API Key</td>
+            <td>OS-native credential manager</td>
+            <td>OS-managed encryption</td>
+            <td>Until user revokes</td>
+        </tr>
+    </table>
+
+    <h3>7.2 Data Sent to External Services</h3>
+    <div class="warning-box">
+        <strong>Privacy-Critical:</strong> The only external service that receives user data is the Groq API. The following data is transmitted:
+    </div>
+    <ul>
+        <li>Sanitized accessibility tree of the current page (stripped of sensitive values per NFR-2.2).</li>
+        <li>User's natural language instruction to the agent.</li>
+        <li>Agent conversation history for the current session (for multi-turn context).</li>
+    </ul>
+    <p>The following data is <strong>never</strong> transmitted:</p>
+    <ul>
+        <li>Passwords, credit card numbers, or other sensitive form field values.</li>
+        <li>CSRF tokens or hidden authentication tokens.</li>
+        <li>Local file system paths or network configuration.</li>
+        <li>Browsing history, bookmarks, or other stored user data.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 8: ERROR HANDLING & FALLBACK BEHAVIOR -->
+    <!-- ============================================================ -->
+    <h2 id="sec8">8. Error Handling & Fallback Behavior</h2>
+
+    <table>
+        <tr>
+            <th>Error Scenario</th>
+            <th>Detection</th>
+            <th>Fallback Behavior</th>
+        </tr>
+        <tr>
+            <td>Groq API unreachable (network failure)</td>
+            <td>Connection timeout (5s) or DNS resolution failure</td>
+            <td>Enter degraded mode (FR-3.9). Display notification. Retry with exponential backoff (max 3 retries). All non-AI features continue.</td>
+        </tr>
+        <tr>
+            <td>Groq API rate limited (HTTP 429)</td>
+            <td><code>429 Too Many Requests</code> response</td>
+            <td>Respect <code>Retry-After</code> header. Queue the request. Inform user of estimated wait time.</td>
+        </tr>
+        <tr>
+            <td>Groq API returns malformed JSON</td>
+            <td>JSON parse failure or schema validation failure</td>
+            <td>Retry the request up to 2 times with the same prompt. If all retries fail, display error to user and log the malformed response.</td>
+        </tr>
+        <tr>
+            <td>Groq API key invalid or expired</td>
+            <td><code>401 Unauthorized</code> response</td>
+            <td>Prompt the user to re-enter their API key via a secure dialog. Do not retry with the same key.</td>
+        </tr>
+        <tr>
+            <td>LLM returns unsafe or out-of-scope action</td>
+            <td>Action schema validation flags unknown action type</td>
+            <td>Reject the action. Log the event. Inform the user: "The AI attempted an unsupported action and was blocked."</td>
+        </tr>
+        <tr>
+            <td>DOM extraction fails (page too complex)</td>
+            <td>Extraction timeout (&gt;5s) or memory threshold exceeded</td>
+            <td>Return a truncated accessibility tree (top-level elements only). Warn the user that the agent may have limited context.</td>
+        </tr>
+        <tr>
+            <td>Filter list update fails</td>
+            <td>HTTP error or checksum mismatch during list download</td>
+            <td>Continue using the cached (stale) filter list. Retry update on next scheduled cycle. Log the failure.</td>
+        </tr>
+        <tr>
+            <td>Webview crash</td>
+            <td>Webview process exit event</td>
+            <td>Display a "page crashed" placeholder in the affected tab. Offer to reload. Other tabs remain unaffected.</td>
+        </tr>
+        <tr>
+            <td>Password decryption failure</td>
+            <td>OS credential manager returns error</td>
+            <td>Do not autofill. Log the error. Prompt the user to re-enter the password manually.</td>
+        </tr>
+    </table>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 9: DEPLOYMENT & INSTALLATION -->
+    <!-- ============================================================ -->
+    <h2 id="sec9">9. Deployment & Installation</h2>
+
+    <h3>9.1 Target Platforms</h3>
+    <table>
+        <tr>
+            <th>Platform</th>
+            <th>Minimum OS Version</th>
+            <th>Installer Format</th>
+            <th>Priority</th>
+        </tr>
+        <tr>
+            <td>Windows</td>
+            <td>Windows 10 v1803 (April 2018 Update)</td>
+            <td>.msi / .exe (NSIS or WiX)</td>
+            <td><span class="priority-must">[MUST]</span></td>
+        </tr>
+        <tr>
+            <td>macOS</td>
+            <td>macOS 11 (Big Sur)</td>
+            <td>.dmg</td>
+            <td><span class="priority-should">[SHOULD]</span></td>
+        </tr>
+        <tr>
+            <td>Linux</td>
+            <td>Ubuntu 22.04 / Fedora 38 equivalent</td>
+            <td>.deb / .AppImage</td>
+            <td><span class="priority-could">[COULD]</span></td>
+        </tr>
+    </table>
+
+    <h3>9.2 Installation Requirements</h3>
+    <ul>
+        <li>The installer shall not require administrator/root privileges for per-user installation.</li>
+        <li>On Windows, the installer shall check for and prompt installation of WebView2 Runtime if not present.</li>
+        <li>On Linux, the installer shall verify that WebKitGTK is available and provide clear instructions if missing.</li>
+        <li>First launch shall guide the user through initial setup: Groq API key entry, default privacy level selection, and optional data import from another browser.</li>
+    </ul>
+
+    <h3>9.3 Update Strategy</h3>
+    <ul>
+        <li><span class="priority-should">[SHOULD]</span> The browser shall support auto-update checks on startup (configurable). Updates shall be downloaded in the background and applied on the next restart.</li>
+        <li><span class="priority-should">[SHOULD]</span> The update mechanism shall verify the integrity and authenticity of update packages via digital signature verification.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 10: APPENDICES -->
+    <!-- ============================================================ -->
+    <h2 id="sec10">10. Appendices</h2>
+
+    <h3>Appendix A: Requirement Traceability Matrix</h3>
+    <p>The following table maps each requirement to its corresponding use case and test strategy.</p>
+    <table>
+        <tr>
+            <th>Requirement ID</th>
+            <th>Requirement Summary</th>
+            <th>Related Use Case(s)</th>
+            <th>Test Strategy</th>
+        </tr>
+        <tr>
+            <td>FR-1.1</td>
+            <td>Standard web navigation</td>
+            <td>UC-1, UC-3</td>
+            <td>Automated UI tests (navigation, history)</td>
+        </tr>
+        <tr>
+            <td>FR-1.2</td>
+            <td>Multi-tab interface</td>
+            <td>UC-1, UC-3</td>
+            <td>Automated UI tests (tab lifecycle)</td>
+        </tr>
+        <tr>
+            <td>FR-1.3</td>
+            <td>Local user data management</td>
+            <td>UC-2</td>
+            <td>Unit tests (storage), manual security review</td>
+        </tr>
+        <tr>
+            <td>FR-2.1 – FR-2.4</td>
+            <td>Privacy & ad-blocking engine</td>
+            <td>UC-1</td>
+            <td>Unit tests (filter matching), integration tests (webview interception)</td>
+        </tr>
+        <tr>
+            <td>FR-3.1 – FR-3.6</td>
+            <td>Agentic AI core pipeline</td>
+            <td>UC-2, UC-3, UC-5</td>
+            <td>Integration tests (mock API), end-to-end tests (live API)</td>
+        </tr>
+        <tr>
+            <td>FR-3.8</td>
+            <td>Action transparency & control</td>
+            <td>UC-2, UC-3</td>
+            <td>Manual UI review, automated panel state tests</td>
+        </tr>
+        <tr>
+            <td>FR-3.9</td>
+            <td>Offline / degraded mode</td>
+            <td>UC-4</td>
+            <td>Integration test (disconnect API, verify graceful degradation)</td>
+        </tr>
+        <tr>
+            <td>NFR-2.1 – NFR-2.6</td>
+            <td>Security & safety</td>
+            <td>All</td>
+            <td>Security audit, penetration testing, manual code review</td>
+        </tr>
+    </table>
+
+    <h3>Appendix B: Action Schema (FR-3.5 / FR-3.6)</h3>
+    <p>The following JSON schema defines the expected structure of LLM-generated browser actions:</p>
+    <pre><code>{
+  "type": "object",
+  "required": ["action", "params"],
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": ["click", "type", "scroll", "navigate", "select", "wait", "extract"]
+    },
+    "params": {
+      "type": "object",
+      "properties": {
+        "selector": { "type": "string" },
+        "text": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "direction": { "type": "string", "enum": ["up", "down", "left", "right"] },
+        "amount": { "type": "integer", "minimum": 0 },
+        "value": { "type": "string" },
+        "ms": { "type": "integer", "minimum": 0, "maximum": 10000 }
+      }
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "The LLM's explanation for why this action was chosen."
+    }
+  }
+}</code></pre>
+
+</body>
+</html>
